@@ -265,12 +265,12 @@ body {
 
 /* ===== Content Area ===== */
 .content {
-    overflow-y: auto;
+    overflow: hidden;
     padding: var(--spacing-md);
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--spacing-md);
-    min-height: 0;
+    height: 100%;
 }
 
 /* ===== Panels ===== */
@@ -282,11 +282,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-}
-
-.config-panel {
-    max-height: 45vh;
-    min-height: 200px;
+    height: 100%;
 }
 
 .panel-header {
@@ -472,10 +468,6 @@ body {
     border-bottom-color: var(--accent-primary);
 }
 
-.preview-panel {
-    min-height: 400px;
-}
-
 .preview-content {
     position: relative;
     flex: 1;
@@ -541,7 +533,7 @@ body {
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .main-container {
         grid-template-columns: 220px 1fr;
     }
@@ -549,9 +541,27 @@ body {
     .sidebar {
         padding: var(--spacing-sm);
     }
+}
+
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 200px 1fr;
+    }
+
+    .content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        overflow-y: auto;
+        height: auto;
+    }
 
     .config-panel {
         max-height: 40vh;
+        min-height: 200px;
+    }
+
+    .preview-panel {
+        min-height: 400px;
     }
 }
 
@@ -570,17 +580,19 @@ body {
     }
 
     .content {
-        display: flex;
-        flex-direction: column;
-        overflow-y: visible;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        overflow-y: auto;
+        padding: var(--spacing-sm);
     }
 
     .config-panel {
         max-height: none;
+        min-height: auto;
     }
 
     .preview-panel {
-        min-height: 300px;
+        min-height: 350px;
     }
 
     .export-buttons {
@@ -591,6 +603,7 @@ body {
         flex-direction: column;
         gap: var(--spacing-md);
         align-items: flex-start;
+        padding: var(--spacing-md);
     }
 
     .sidebar-title {
