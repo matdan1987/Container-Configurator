@@ -3,7 +3,7 @@ const serviceTemplates = {
     nextcloud: {
         name: 'nextcloud',
         image: 'lscr.io/linuxserver/nextcloud:latest',
-        ports: ['80:80', '443:443'],
+        ports: ['443:443'],
         volumes: [
             './nextcloud/config:/config',
             './nextcloud/data:/data'
@@ -239,6 +239,232 @@ const serviceTemplates = {
             'PGID=1000',
             'TZ=Europe/Berlin'
         ],
+        restart: 'unless-stopped'
+    },
+    lidarr: {
+        name: 'lidarr',
+        image: 'lscr.io/linuxserver/lidarr:latest',
+        ports: ['8686:8686'],
+        volumes: [
+            './lidarr/config:/config',
+            './media/music:/music',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    readarr: {
+        name: 'readarr',
+        image: 'lscr.io/linuxserver/readarr:develop',
+        ports: ['8787:8787'],
+        volumes: [
+            './readarr/config:/config',
+            './media/books:/books',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    tautulli: {
+        name: 'tautulli',
+        image: 'lscr.io/linuxserver/tautulli:latest',
+        ports: ['8181:8181'],
+        volumes: [
+            './tautulli/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    photoprism: {
+        name: 'photoprism',
+        image: 'photoprism/photoprism:latest',
+        ports: ['2342:2342'],
+        volumes: [
+            './photoprism/storage:/photoprism/storage',
+            './photoprism/originals:/photoprism/originals'
+        ],
+        environment: [
+            'PHOTOPRISM_ADMIN_PASSWORD=admin',
+            'PHOTOPRISM_SITE_URL=http://localhost:2342/',
+            'PHOTOPRISM_ORIGINALS_LIMIT=5000',
+            'PHOTOPRISM_HTTP_COMPRESSION=gzip',
+            'PHOTOPRISM_DATABASE_DRIVER=sqlite',
+            'PHOTOPRISM_DISABLE_CHOWN=false',
+            'PHOTOPRISM_DISABLE_WEBDAV=false',
+            'PHOTOPRISM_DISABLE_SETTINGS=false',
+            'PHOTOPRISM_DISABLE_TENSORFLOW=false',
+            'PHOTOPRISM_UPLOAD_NSFW=true',
+            'PHOTOPRISM_DETECT_NSFW=false'
+        ],
+        restart: 'unless-stopped'
+    },
+    calibreweb: {
+        name: 'calibreweb',
+        image: 'lscr.io/linuxserver/calibre-web:latest',
+        ports: ['8083:8083'],
+        volumes: [
+            './calibreweb/config:/config',
+            './media/books:/books'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    audiobookshelf: {
+        name: 'audiobookshelf',
+        image: 'ghcr.io/audiobookshelf/audiobookshelf:latest',
+        ports: ['13378:80'],
+        volumes: [
+            './audiobookshelf/audiobooks:/audiobooks',
+            './audiobookshelf/podcasts:/podcasts',
+            './audiobookshelf/config:/config',
+            './audiobookshelf/metadata:/metadata'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    navidrome: {
+        name: 'navidrome',
+        image: 'deluan/navidrome:latest',
+        ports: ['4533:4533'],
+        volumes: [
+            './navidrome/data:/data',
+            './media/music:/music'
+        ],
+        environment: [
+            'ND_SCANSCHEDULE=1h',
+            'ND_LOGLEVEL=info',
+            'ND_SESSIONTIMEOUT=24h',
+            'ND_BASEURL='
+        ],
+        restart: 'unless-stopped'
+    },
+    freshrss: {
+        name: 'freshrss',
+        image: 'lscr.io/linuxserver/freshrss:latest',
+        ports: ['8084:80'],
+        volumes: [
+            './freshrss/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    mealie: {
+        name: 'mealie',
+        image: 'ghcr.io/mealie-recipes/mealie:latest',
+        ports: ['9925:9000'],
+        volumes: [
+            './mealie/data:/app/data/'
+        ],
+        environment: [
+            'ALLOW_SIGNUP=true',
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin',
+            'MAX_WORKERS=1',
+            'WEB_CONCURRENCY=1',
+            'BASE_URL=http://localhost:9925'
+        ],
+        restart: 'unless-stopped'
+    },
+    paperlessngx: {
+        name: 'paperlessngx',
+        image: 'ghcr.io/paperless-ngx/paperless-ngx:latest',
+        ports: ['8000:8000'],
+        volumes: [
+            './paperless/data:/usr/src/paperless/data',
+            './paperless/media:/usr/src/paperless/media',
+            './paperless/export:/usr/src/paperless/export',
+            './paperless/consume:/usr/src/paperless/consume'
+        ],
+        environment: [
+            'PAPERLESS_REDIS=redis://localhost:6379',
+            'PAPERLESS_DBHOST=localhost',
+            'PAPERLESS_TIME_ZONE=Europe/Berlin',
+            'PAPERLESS_OCR_LANGUAGE=deu+eng',
+            'USERMAP_UID=1000',
+            'USERMAP_GID=1000'
+        ],
+        restart: 'unless-stopped'
+    },
+    nginxproxymanager: {
+        name: 'nginxproxymanager',
+        image: 'jc21/nginx-proxy-manager:latest',
+        ports: ['80:80', '81:81', '443:443'],
+        volumes: [
+            './nginx-proxy-manager/data:/data',
+            './nginx-proxy-manager/letsencrypt:/etc/letsencrypt'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    homarr: {
+        name: 'homarr',
+        image: 'ghcr.io/ajnart/homarr:latest',
+        ports: ['7575:7575'],
+        volumes: [
+            './homarr/configs:/app/data/configs',
+            './homarr/icons:/app/public/icons',
+            './homarr/data:/data'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    homepage: {
+        name: 'homepage',
+        image: 'ghcr.io/gethomepage/homepage:latest',
+        ports: ['3000:3000'],
+        volumes: [
+            './homepage/config:/app/config',
+            '/var/run/docker.sock:/var/run/docker.sock:ro'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    syncthing: {
+        name: 'syncthing',
+        image: 'lscr.io/linuxserver/syncthing:latest',
+        ports: ['8384:8384', '22000:22000/tcp', '22000:22000/udp', '21027:21027/udp'],
+        volumes: [
+            './syncthing/config:/config',
+            './syncthing/data:/data'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    filebrowser: {
+        name: 'filebrowser',
+        image: 'filebrowser/filebrowser:latest',
+        ports: ['8082:80'],
+        volumes: [
+            './filebrowser/data:/srv',
+            './filebrowser/database:/database',
+            './filebrowser/config:/config'
+        ],
+        environment: [],
         restart: 'unless-stopped'
     },
     // Home Automation
