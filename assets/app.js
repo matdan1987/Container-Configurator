@@ -449,10 +449,10 @@ function renderConfigPanel() {
 
     // Render dynamic lists
     renderDynamicList('portsList', container.ports, 'Port (z.B. 8080:80)');
-    renderDynamicList('volumesList', container.volumes, 'Volume (z.B. ./data:/data)');
+    renderDynamicList('volumesList', container.volumes, 'Datenordner (z.B. ./data:/data)');
     renderEnvList('envList', container.environment);
-    renderDynamicList('devicesList', container.devices, 'Device (z.B. /dev/dri:/dev/dri)');
-    renderDynamicList('capAddList', container.capAdd, 'Capability (z.B. NET_ADMIN)');
+    renderDynamicList('devicesList', container.devices, 'Gerät (z.B. /dev/dri:/dev/dri)');
+    renderDynamicList('capAddList', container.capAdd, 'Berechtigung (z.B. NET_ADMIN)');
 
     // Attach event listeners
     attachConfigEventListeners();
@@ -491,8 +491,8 @@ function renderEnvList(listId, items) {
         return `
             <div class="dynamic-item">
                 <div class="dynamic-item-inputs">
-                    <input type="text" class="form-input" placeholder="KEY" value="${key}" data-index="${index}" data-part="key">
-                    <input type="text" class="form-input" placeholder="VALUE" value="${value}" data-index="${index}" data-part="value">
+                    <input type="text" class="form-input" placeholder="NAME" value="${key}" data-index="${index}" data-part="key">
+                    <input type="text" class="form-input" placeholder="WERT" value="${value}" data-index="${index}" data-part="value">
                 </div>
                 <button class="btn btn-danger btn-icon" data-index="${index}">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
