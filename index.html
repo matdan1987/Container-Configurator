@@ -40,49 +40,164 @@
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Programme auswählen</h3>
 
-                <!-- Linuxserver.io Containers -->
+                <!-- Search -->
+                <div class="search-box">
+                    <input type="text" id="serviceSearch" class="form-input" placeholder="🔍 Suchen...">
+                </div>
+
+                <!-- Cloud & File -->
                 <div class="service-category">
-                    <h4 class="category-title">Beliebte Programme</h4>
+                    <h4 class="category-title">Cloud & Dateien</h4>
                     <div class="service-list">
                         <button class="service-btn" data-service="nextcloud">
                             <span class="service-icon">☁️</span>
                             Nextcloud
                         </button>
-                        <button class="service-btn" data-service="jellyfin">
-                            <span class="service-icon">🎬</span>
-                            Jellyfin
-                        </button>
-                        <button class="service-btn" data-service="qbittorrent">
-                            <span class="service-icon">📥</span>
-                            qBittorrent
-                        </button>
-                        <button class="service-btn" data-service="swag">
-                            <span class="service-icon">🔒</span>
-                            SWAG
-                        </button>
-                        <button class="service-btn" data-service="mariadb">
-                            <span class="service-icon">🗄️</span>
-                            MariaDB
-                        </button>
-                        <button class="service-btn" data-service="nginx">
-                            <span class="service-icon">🌐</span>
-                            Nginx
-                        </button>
+                    </div>
+                </div>
+
+                <!-- Media -->
+                <div class="service-category">
+                    <h4 class="category-title">Media</h4>
+                    <div class="service-list">
                         <button class="service-btn" data-service="plex">
                             <span class="service-icon">📺</span>
                             Plex
                         </button>
-                        <button class="service-btn" data-service="heimdall">
+                        <button class="service-btn" data-service="jellyfin">
+                            <span class="service-icon">🎬</span>
+                            Jellyfin
+                        </button>
+                        <button class="service-btn" data-service="sonarr">
+                            <span class="service-icon">📺</span>
+                            Sonarr
+                        </button>
+                        <button class="service-btn" data-service="radarr">
+                            <span class="service-icon">🎬</span>
+                            Radarr
+                        </button>
+                        <button class="service-btn" data-service="prowlarr">
+                            <span class="service-icon">🔍</span>
+                            Prowlarr
+                        </button>
+                        <button class="service-btn" data-service="bazarr">
+                            <span class="service-icon">💬</span>
+                            Bazarr
+                        </button>
+                        <button class="service-btn" data-service="overseerr">
+                            <span class="service-icon">🎫</span>
+                            Overseerr
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Downloads -->
+                <div class="service-category">
+                    <h4 class="category-title">Downloads</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="qbittorrent">
+                            <span class="service-icon">📥</span>
+                            qBittorrent
+                        </button>
+                        <button class="service-btn" data-service="transmission">
+                            <span class="service-icon">⬇️</span>
+                            Transmission
+                        </button>
+                        <button class="service-btn" data-service="deluge">
+                            <span class="service-icon">🌊</span>
+                            Deluge
+                        </button>
+                        <button class="service-btn" data-service="sabnzbd">
+                            <span class="service-icon">📦</span>
+                            SABnzbd
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Home Automation -->
+                <div class="service-category">
+                    <h4 class="category-title">Smart Home</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="homeassistant">
                             <span class="service-icon">🏠</span>
+                            Home Assistant
+                        </button>
+                        <button class="service-btn" data-service="nodered">
+                            <span class="service-icon">🔴</span>
+                            Node-RED
+                        </button>
+                        <button class="service-btn" data-service="mosquitto">
+                            <span class="service-icon">🦟</span>
+                            Mosquitto MQTT
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Monitoring -->
+                <div class="service-category">
+                    <h4 class="category-title">Überwachung</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="grafana">
+                            <span class="service-icon">📊</span>
+                            Grafana
+                        </button>
+                        <button class="service-btn" data-service="prometheus">
+                            <span class="service-icon">🔥</span>
+                            Prometheus
+                        </button>
+                        <button class="service-btn" data-service="uptimekuma">
+                            <span class="service-icon">⏱️</span>
+                            Uptime Kuma
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Development -->
+                <div class="service-category">
+                    <h4 class="category-title">Entwicklung</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="codeserver">
+                            <span class="service-icon">💻</span>
+                            VS Code Server
+                        </button>
+                        <button class="service-btn" data-service="gitea">
+                            <span class="service-icon">🦊</span>
+                            Gitea
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Utilities -->
+                <div class="service-category">
+                    <h4 class="category-title">Werkzeuge</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="portainer">
+                            <span class="service-icon">🐳</span>
+                            Portainer
+                        </button>
+                        <button class="service-btn" data-service="watchtower">
+                            <span class="service-icon">🗼</span>
+                            Watchtower
+                        </button>
+                        <button class="service-btn" data-service="duplicati">
+                            <span class="service-icon">💾</span>
+                            Duplicati
+                        </button>
+                        <button class="service-btn" data-service="heimdall">
+                            <span class="service-icon">🌈</span>
                             Heimdall
                         </button>
                     </div>
                 </div>
 
-                <!-- Generic Containers -->
+                <!-- Databases & Infrastructure -->
                 <div class="service-category">
-                    <h4 class="category-title">Datenbanken & Mehr</h4>
+                    <h4 class="category-title">Datenbanken</h4>
                     <div class="service-list">
+                        <button class="service-btn" data-service="mariadb">
+                            <span class="service-icon">🗄️</span>
+                            MariaDB
+                        </button>
                         <button class="service-btn" data-service="postgres">
                             <span class="service-icon">🐘</span>
                             PostgreSQL
@@ -91,9 +206,65 @@
                             <span class="service-icon">⚡</span>
                             Redis
                         </button>
+                    </div>
+                </div>
+
+                <!-- Web & Proxy -->
+                <div class="service-category">
+                    <h4 class="category-title">Web & Proxy</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="nginx">
+                            <span class="service-icon">🌐</span>
+                            Nginx
+                        </button>
                         <button class="service-btn" data-service="traefik">
                             <span class="service-icon">🔀</span>
                             Traefik
+                        </button>
+                        <button class="service-btn" data-service="swag">
+                            <span class="service-icon">🔒</span>
+                            SWAG
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security & Privacy -->
+                <div class="service-category">
+                    <h4 class="category-title">Sicherheit</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="vaultwarden">
+                            <span class="service-icon">🔐</span>
+                            Vaultwarden
+                        </button>
+                        <button class="service-btn" data-service="wireguard">
+                            <span class="service-icon">🔑</span>
+                            Wireguard VPN
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Wiki & Docs -->
+                <div class="service-category">
+                    <h4 class="category-title">Dokumentation</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="bookstack">
+                            <span class="service-icon">📚</span>
+                            BookStack
+                        </button>
+                        <button class="service-btn" data-service="wikijs">
+                            <span class="service-icon">📖</span>
+                            Wiki.js
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Communication -->
+                <div class="service-category">
+                    <h4 class="category-title">Kommunikation</h4>
+                    <div class="service-list">
+                        <button class="service-btn" data-service="mattermost">
+                            <span class="service-icon">💬</span>
+                            Mattermost
                         </button>
                     </div>
                 </div>
@@ -172,8 +343,16 @@
                 </div>
 
                 <div class="preview-tabs">
-                    <button class="tab-btn active" data-tab="yaml">Konfigurationsdatei</button>
-                    <button class="tab-btn" data-tab="cli">Terminal-Befehle</button>
+                    <div class="tabs-left">
+                        <button class="tab-btn active" data-tab="yaml">Konfigurationsdatei</button>
+                        <button class="tab-btn" data-tab="cli">Terminal-Befehle</button>
+                    </div>
+                    <button class="btn btn-icon" id="copyBtn" title="In Zwischenablage kopieren">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
                 </div>
 
                 <div class="preview-content">
