@@ -169,6 +169,14 @@ body {
     margin-bottom: var(--spacing-xl);
 }
 
+.search-box {
+    margin-bottom: var(--spacing-md);
+}
+
+.search-box input {
+    font-size: 0.875rem;
+}
+
 .sidebar-title {
     font-size: 0.875rem;
     font-weight: 600;
@@ -442,8 +450,15 @@ body {
 /* ===== Preview ===== */
 .preview-tabs {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: var(--bg-tertiary);
     border-bottom: 1px solid var(--border-color);
+    padding-right: var(--spacing-sm);
+}
+
+.tabs-left {
+    display: flex;
 }
 
 .tab-btn {

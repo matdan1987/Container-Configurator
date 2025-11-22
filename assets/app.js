@@ -3,7 +3,7 @@ const serviceTemplates = {
     nextcloud: {
         name: 'nextcloud',
         image: 'lscr.io/linuxserver/nextcloud:latest',
-        ports: ['80:80', '443:443'],
+        ports: ['443:443'],
         volumes: [
             './nextcloud/config:/config',
             './nextcloud/data:/data'
@@ -164,6 +164,590 @@ const serviceTemplates = {
         command: '--api.insecure=true --providers.docker',
         restart: 'unless-stopped'
     },
+    // Media Management
+    sonarr: {
+        name: 'sonarr',
+        image: 'lscr.io/linuxserver/sonarr:latest',
+        ports: ['8989:8989'],
+        volumes: [
+            './sonarr/config:/config',
+            './media/tv:/tv',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    radarr: {
+        name: 'radarr',
+        image: 'lscr.io/linuxserver/radarr:latest',
+        ports: ['7878:7878'],
+        volumes: [
+            './radarr/config:/config',
+            './media/movies:/movies',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    prowlarr: {
+        name: 'prowlarr',
+        image: 'lscr.io/linuxserver/prowlarr:latest',
+        ports: ['9696:9696'],
+        volumes: [
+            './prowlarr/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    bazarr: {
+        name: 'bazarr',
+        image: 'lscr.io/linuxserver/bazarr:latest',
+        ports: ['6767:6767'],
+        volumes: [
+            './bazarr/config:/config',
+            './media/movies:/movies',
+            './media/tv:/tv'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    overseerr: {
+        name: 'overseerr',
+        image: 'lscr.io/linuxserver/overseerr:latest',
+        ports: ['5055:5055'],
+        volumes: [
+            './overseerr/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    lidarr: {
+        name: 'lidarr',
+        image: 'lscr.io/linuxserver/lidarr:latest',
+        ports: ['8686:8686'],
+        volumes: [
+            './lidarr/config:/config',
+            './media/music:/music',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    readarr: {
+        name: 'readarr',
+        image: 'lscr.io/linuxserver/readarr:develop',
+        ports: ['8787:8787'],
+        volumes: [
+            './readarr/config:/config',
+            './media/books:/books',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    tautulli: {
+        name: 'tautulli',
+        image: 'lscr.io/linuxserver/tautulli:latest',
+        ports: ['8181:8181'],
+        volumes: [
+            './tautulli/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    photoprism: {
+        name: 'photoprism',
+        image: 'photoprism/photoprism:latest',
+        ports: ['2342:2342'],
+        volumes: [
+            './photoprism/storage:/photoprism/storage',
+            './photoprism/originals:/photoprism/originals'
+        ],
+        environment: [
+            'PHOTOPRISM_ADMIN_PASSWORD=admin',
+            'PHOTOPRISM_SITE_URL=http://localhost:2342/',
+            'PHOTOPRISM_ORIGINALS_LIMIT=5000',
+            'PHOTOPRISM_HTTP_COMPRESSION=gzip',
+            'PHOTOPRISM_DATABASE_DRIVER=sqlite',
+            'PHOTOPRISM_DISABLE_CHOWN=false',
+            'PHOTOPRISM_DISABLE_WEBDAV=false',
+            'PHOTOPRISM_DISABLE_SETTINGS=false',
+            'PHOTOPRISM_DISABLE_TENSORFLOW=false',
+            'PHOTOPRISM_UPLOAD_NSFW=true',
+            'PHOTOPRISM_DETECT_NSFW=false'
+        ],
+        restart: 'unless-stopped'
+    },
+    calibreweb: {
+        name: 'calibreweb',
+        image: 'lscr.io/linuxserver/calibre-web:latest',
+        ports: ['8083:8083'],
+        volumes: [
+            './calibreweb/config:/config',
+            './media/books:/books'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    audiobookshelf: {
+        name: 'audiobookshelf',
+        image: 'ghcr.io/audiobookshelf/audiobookshelf:latest',
+        ports: ['13378:80'],
+        volumes: [
+            './audiobookshelf/audiobooks:/audiobooks',
+            './audiobookshelf/podcasts:/podcasts',
+            './audiobookshelf/config:/config',
+            './audiobookshelf/metadata:/metadata'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    navidrome: {
+        name: 'navidrome',
+        image: 'deluan/navidrome:latest',
+        ports: ['4533:4533'],
+        volumes: [
+            './navidrome/data:/data',
+            './media/music:/music'
+        ],
+        environment: [
+            'ND_SCANSCHEDULE=1h',
+            'ND_LOGLEVEL=info',
+            'ND_SESSIONTIMEOUT=24h',
+            'ND_BASEURL='
+        ],
+        restart: 'unless-stopped'
+    },
+    freshrss: {
+        name: 'freshrss',
+        image: 'lscr.io/linuxserver/freshrss:latest',
+        ports: ['8084:80'],
+        volumes: [
+            './freshrss/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    mealie: {
+        name: 'mealie',
+        image: 'ghcr.io/mealie-recipes/mealie:latest',
+        ports: ['9925:9000'],
+        volumes: [
+            './mealie/data:/app/data/'
+        ],
+        environment: [
+            'ALLOW_SIGNUP=true',
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin',
+            'MAX_WORKERS=1',
+            'WEB_CONCURRENCY=1',
+            'BASE_URL=http://localhost:9925'
+        ],
+        restart: 'unless-stopped'
+    },
+    paperlessngx: {
+        name: 'paperlessngx',
+        image: 'ghcr.io/paperless-ngx/paperless-ngx:latest',
+        ports: ['8000:8000'],
+        volumes: [
+            './paperless/data:/usr/src/paperless/data',
+            './paperless/media:/usr/src/paperless/media',
+            './paperless/export:/usr/src/paperless/export',
+            './paperless/consume:/usr/src/paperless/consume'
+        ],
+        environment: [
+            'PAPERLESS_REDIS=redis://localhost:6379',
+            'PAPERLESS_DBHOST=localhost',
+            'PAPERLESS_TIME_ZONE=Europe/Berlin',
+            'PAPERLESS_OCR_LANGUAGE=deu+eng',
+            'USERMAP_UID=1000',
+            'USERMAP_GID=1000'
+        ],
+        restart: 'unless-stopped'
+    },
+    nginxproxymanager: {
+        name: 'nginxproxymanager',
+        image: 'jc21/nginx-proxy-manager:latest',
+        ports: ['80:80', '81:81', '443:443'],
+        volumes: [
+            './nginx-proxy-manager/data:/data',
+            './nginx-proxy-manager/letsencrypt:/etc/letsencrypt'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    homarr: {
+        name: 'homarr',
+        image: 'ghcr.io/ajnart/homarr:latest',
+        ports: ['7575:7575'],
+        volumes: [
+            './homarr/configs:/app/data/configs',
+            './homarr/icons:/app/public/icons',
+            './homarr/data:/data'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    homepage: {
+        name: 'homepage',
+        image: 'ghcr.io/gethomepage/homepage:latest',
+        ports: ['3000:3000'],
+        volumes: [
+            './homepage/config:/app/config',
+            '/var/run/docker.sock:/var/run/docker.sock:ro'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    syncthing: {
+        name: 'syncthing',
+        image: 'lscr.io/linuxserver/syncthing:latest',
+        ports: ['8384:8384', '22000:22000/tcp', '22000:22000/udp', '21027:21027/udp'],
+        volumes: [
+            './syncthing/config:/config',
+            './syncthing/data:/data'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    filebrowser: {
+        name: 'filebrowser',
+        image: 'filebrowser/filebrowser:latest',
+        ports: ['8082:80'],
+        volumes: [
+            './filebrowser/data:/srv',
+            './filebrowser/database:/database',
+            './filebrowser/config:/config'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    // Home Automation
+    homeassistant: {
+        name: 'homeassistant',
+        image: 'ghcr.io/home-assistant/home-assistant:stable',
+        ports: ['8123:8123'],
+        volumes: [
+            './homeassistant/config:/config',
+            '/etc/localtime:/etc/localtime:ro'
+        ],
+        environment: [],
+        restart: 'unless-stopped',
+        privileged: true,
+        networkMode: 'host'
+    },
+    nodered: {
+        name: 'nodered',
+        image: 'nodered/node-red:latest',
+        ports: ['1880:1880'],
+        volumes: [
+            './nodered/data:/data'
+        ],
+        environment: [
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    mosquitto: {
+        name: 'mosquitto',
+        image: 'eclipse-mosquitto:latest',
+        ports: ['1883:1883', '9001:9001'],
+        volumes: [
+            './mosquitto/config:/mosquitto/config',
+            './mosquitto/data:/mosquitto/data',
+            './mosquitto/log:/mosquitto/log'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    // Monitoring
+    grafana: {
+        name: 'grafana',
+        image: 'grafana/grafana:latest',
+        ports: ['3000:3000'],
+        volumes: [
+            './grafana/data:/var/lib/grafana'
+        ],
+        environment: [
+            'GF_SECURITY_ADMIN_PASSWORD=admin',
+            'GF_USERS_ALLOW_SIGN_UP=false'
+        ],
+        restart: 'unless-stopped'
+    },
+    prometheus: {
+        name: 'prometheus',
+        image: 'prom/prometheus:latest',
+        ports: ['9090:9090'],
+        volumes: [
+            './prometheus/config:/etc/prometheus',
+            './prometheus/data:/prometheus'
+        ],
+        command: '--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus',
+        restart: 'unless-stopped'
+    },
+    uptimekuma: {
+        name: 'uptimekuma',
+        image: 'louislam/uptime-kuma:latest',
+        ports: ['3001:3001'],
+        volumes: [
+            './uptimekuma/data:/app/data'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    // Downloads
+    transmission: {
+        name: 'transmission',
+        image: 'lscr.io/linuxserver/transmission:latest',
+        ports: ['9091:9091', '51413:51413', '51413:51413/udp'],
+        volumes: [
+            './transmission/config:/config',
+            './downloads:/downloads',
+            './transmission/watch:/watch'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    deluge: {
+        name: 'deluge',
+        image: 'lscr.io/linuxserver/deluge:latest',
+        ports: ['8112:8112', '6881:6881', '6881:6881/udp'],
+        volumes: [
+            './deluge/config:/config',
+            './downloads:/downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    sabnzbd: {
+        name: 'sabnzbd',
+        image: 'lscr.io/linuxserver/sabnzbd:latest',
+        ports: ['8080:8080'],
+        volumes: [
+            './sabnzbd/config:/config',
+            './downloads:/downloads',
+            './sabnzbd/incomplete:/incomplete-downloads'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    // Development
+    codeserver: {
+        name: 'codeserver',
+        image: 'lscr.io/linuxserver/code-server:latest',
+        ports: ['8443:8443'],
+        volumes: [
+            './codeserver/config:/config',
+            './projects:/config/workspace'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin',
+            'PASSWORD=password',
+            'SUDO_PASSWORD=password'
+        ],
+        restart: 'unless-stopped'
+    },
+    gitea: {
+        name: 'gitea',
+        image: 'gitea/gitea:latest',
+        ports: ['3000:3000', '222:22'],
+        volumes: [
+            './gitea/data:/data',
+            '/etc/timezone:/etc/timezone:ro',
+            '/etc/localtime:/etc/localtime:ro'
+        ],
+        environment: [
+            'USER_UID=1000',
+            'USER_GID=1000'
+        ],
+        restart: 'unless-stopped'
+    },
+    // Utilities
+    watchtower: {
+        name: 'watchtower',
+        image: 'containrrr/watchtower:latest',
+        ports: [],
+        volumes: [
+            '/var/run/docker.sock:/var/run/docker.sock'
+        ],
+        environment: [
+            'TZ=Europe/Berlin',
+            'WATCHTOWER_CLEANUP=true',
+            'WATCHTOWER_SCHEDULE=0 0 4 * * *'
+        ],
+        restart: 'unless-stopped'
+    },
+    portainer: {
+        name: 'portainer',
+        image: 'portainer/portainer-ce:latest',
+        ports: ['9000:9000', '9443:9443'],
+        volumes: [
+            '/var/run/docker.sock:/var/run/docker.sock',
+            './portainer/data:/data'
+        ],
+        environment: [],
+        restart: 'unless-stopped'
+    },
+    duplicati: {
+        name: 'duplicati',
+        image: 'lscr.io/linuxserver/duplicati:latest',
+        ports: ['8200:8200'],
+        volumes: [
+            './duplicati/config:/config',
+            './backups:/backups',
+            './source:/source'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin'
+        ],
+        restart: 'unless-stopped'
+    },
+    // Security
+    vaultwarden: {
+        name: 'vaultwarden',
+        image: 'vaultwarden/server:latest',
+        ports: ['80:80'],
+        volumes: [
+            './vaultwarden/data:/data'
+        ],
+        environment: [
+            'SIGNUPS_ALLOWED=true',
+            'WEBSOCKET_ENABLED=true'
+        ],
+        restart: 'unless-stopped'
+    },
+    // Wiki/Docs
+    bookstack: {
+        name: 'bookstack',
+        image: 'lscr.io/linuxserver/bookstack:latest',
+        ports: ['6875:80'],
+        volumes: [
+            './bookstack/config:/config'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin',
+            'APP_URL=http://localhost:6875',
+            'DB_HOST=bookstack_db',
+            'DB_USER=bookstack',
+            'DB_PASS=bookstackpass',
+            'DB_DATABASE=bookstackapp'
+        ],
+        restart: 'unless-stopped'
+    },
+    wikijs: {
+        name: 'wikijs',
+        image: 'ghcr.io/requarks/wiki:latest',
+        ports: ['3000:3000'],
+        volumes: [],
+        environment: [
+            'DB_TYPE=sqlite',
+            'DB_FILEPATH=/data/wiki.db'
+        ],
+        restart: 'unless-stopped'
+    },
+    // Communication
+    mattermost: {
+        name: 'mattermost',
+        image: 'mattermost/mattermost-team-edition:latest',
+        ports: ['8065:8065'],
+        volumes: [
+            './mattermost/config:/mattermost/config',
+            './mattermost/data:/mattermost/data',
+            './mattermost/logs:/mattermost/logs'
+        ],
+        environment: [
+            'TZ=Europe/Berlin',
+            'MM_SQLSETTINGS_DRIVERNAME=postgres',
+            'MM_SQLSETTINGS_DATASOURCE=postgres://mattermost:password@postgres:5432/mattermost?sslmode=disable'
+        ],
+        restart: 'unless-stopped'
+    },
+    // VPN
+    wireguard: {
+        name: 'wireguard',
+        image: 'lscr.io/linuxserver/wireguard:latest',
+        ports: ['51820:51820/udp'],
+        volumes: [
+            './wireguard/config:/config',
+            '/lib/modules:/lib/modules'
+        ],
+        environment: [
+            'PUID=1000',
+            'PGID=1000',
+            'TZ=Europe/Berlin',
+            'SERVERURL=auto',
+            'SERVERPORT=51820',
+            'PEERS=1',
+            'PEERDNS=auto'
+        ],
+        restart: 'unless-stopped',
+        capAdd: ['NET_ADMIN', 'SYS_MODULE'],
+        privileged: true
+    },
+    // Custom
     custom: {
         name: 'custom',
         image: '',
@@ -851,6 +1435,11 @@ function updatePreviews() {
     if (cliPreview) {
         cliPreview.textContent = generateCLI();
     }
+
+    // Auto-save on preview update (if function exists)
+    if (typeof autoSave === 'function') {
+        autoSave();
+    }
 }
 
 // ===== Export Functions =====
@@ -923,21 +1512,139 @@ function handleTabSwitch(tabName) {
     });
 }
 
+// ===== Copy to Clipboard =====
+function copyToClipboard() {
+    const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+    let textToCopy = '';
+
+    if (activeTab === 'yaml') {
+        textToCopy = generateYAML();
+    } else {
+        textToCopy = generateCLI();
+    }
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        // Visual feedback
+        const copyBtn = document.getElementById('copyBtn');
+        const originalHTML = copyBtn.innerHTML;
+
+        copyBtn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+        `;
+        copyBtn.style.color = 'var(--accent-success)';
+
+        setTimeout(() => {
+            copyBtn.innerHTML = originalHTML;
+            copyBtn.style.color = '';
+        }, 2000);
+    }).catch(err => {
+        console.error('Fehler beim Kopieren:', err);
+        alert('Fehler beim Kopieren in die Zwischenablage');
+    });
+}
+
+// ===== Search Functionality =====
+function handleSearch(searchTerm) {
+    const term = searchTerm.toLowerCase().trim();
+    const categories = document.querySelectorAll('.service-category');
+
+    categories.forEach(category => {
+        const buttons = category.querySelectorAll('.service-btn');
+        let hasVisibleButtons = false;
+
+        buttons.forEach(btn => {
+            const serviceName = btn.textContent.toLowerCase();
+            const serviceType = btn.dataset.service.toLowerCase();
+
+            if (serviceName.includes(term) || serviceType.includes(term)) {
+                btn.style.display = '';
+                hasVisibleButtons = true;
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+
+        // Hide category if no visible buttons
+        if (term === '') {
+            category.style.display = '';
+        } else {
+            category.style.display = hasVisibleButtons ? '' : 'none';
+        }
+    });
+}
+
+// ===== LocalStorage Functions =====
+function saveToLocalStorage() {
+    try {
+        const data = {
+            containers: state.containers,
+            currentContainerId: state.currentContainerId,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('containerConfigurator', JSON.stringify(data));
+    } catch (e) {
+        console.error('Fehler beim Speichern:', e);
+    }
+}
+
+function loadFromLocalStorage() {
+    try {
+        const data = localStorage.getItem('containerConfigurator');
+        if (data) {
+            const parsed = JSON.parse(data);
+
+            // Load containers
+            state.containers = parsed.containers || [];
+            state.currentContainerId = parsed.currentContainerId || null;
+
+            // Update UI
+            updateActiveContainersList();
+            renderConfigPanel();
+            updatePreviews();
+
+            console.log('Konfiguration geladen');
+        }
+    } catch (e) {
+        console.error('Fehler beim Laden:', e);
+    }
+}
+
+function clearLocalStorage() {
+    localStorage.removeItem('containerConfigurator');
+}
+
+// Auto-save on changes
+function autoSave() {
+    saveToLocalStorage();
+}
+
 // ===== Initialization =====
 document.addEventListener('DOMContentLoaded', () => {
+    // Load from localStorage
+    loadFromLocalStorage();
+
     // Service buttons
     document.querySelectorAll('.service-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const serviceType = btn.dataset.service;
             handleServiceSelect(serviceType);
+            autoSave();
         });
     });
 
     // Clear button
-    document.getElementById('clearBtn').addEventListener('click', handleClearAll);
+    document.getElementById('clearBtn').addEventListener('click', () => {
+        handleClearAll();
+        clearLocalStorage();
+    });
 
     // Remove container button
-    document.getElementById('removeContainerBtn').addEventListener('click', handleRemoveContainer);
+    document.getElementById('removeContainerBtn').addEventListener('click', () => {
+        handleRemoveContainer();
+        autoSave();
+    });
 
     // Tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -949,6 +1656,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Export buttons
     document.getElementById('exportYaml').addEventListener('click', exportYAML);
     document.getElementById('exportScript').addEventListener('click', exportScript);
+
+    // Copy button
+    document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+
+    // Search input
+    const searchInput = document.getElementById('serviceSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            handleSearch(e.target.value);
+        });
+    }
 
     // Initial render
     updatePreviews();
