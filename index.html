@@ -38,11 +38,11 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-section">
-                <h3 class="sidebar-title">Service-Auswahl</h3>
+                <h3 class="sidebar-title">Programme auswählen</h3>
 
                 <!-- Linuxserver.io Containers -->
                 <div class="service-category">
-                    <h4 class="category-title">Linuxserver.io</h4>
+                    <h4 class="category-title">Beliebte Programme</h4>
                     <div class="service-list">
                         <button class="service-btn" data-service="nextcloud">
                             <span class="service-icon">☁️</span>
@@ -81,7 +81,7 @@
 
                 <!-- Generic Containers -->
                 <div class="service-category">
-                    <h4 class="category-title">Allgemein</h4>
+                    <h4 class="category-title">Datenbanken & Mehr</h4>
                     <div class="service-list">
                         <button class="service-btn" data-service="postgres">
                             <span class="service-icon">🐘</span>
@@ -100,11 +100,11 @@
 
                 <!-- Custom Service -->
                 <div class="service-category">
-                    <h4 class="category-title">Custom</h4>
+                    <h4 class="category-title">Eigenes Programm</h4>
                     <div class="service-list">
                         <button class="service-btn" data-service="custom">
                             <span class="service-icon">➕</span>
-                            Custom Container
+                            Eigenes Programm
                         </button>
                     </div>
                 </div>
@@ -112,9 +112,9 @@
 
             <!-- Active Containers -->
             <div class="sidebar-section">
-                <h3 class="sidebar-title">Aktive Container</h3>
+                <h3 class="sidebar-title">Ausgewählte Programme</h3>
                 <div id="activeContainers" class="active-containers">
-                    <p class="empty-state">Keine Container ausgewählt</p>
+                    <p class="empty-state">Keine Programme ausgewählt</p>
                 </div>
             </div>
         </aside>
@@ -124,13 +124,13 @@
             <!-- Configuration Panel -->
             <div class="config-panel" id="configPanel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Container-Konfiguration</h2>
+                    <h2 class="panel-title">Einstellungen</h2>
                     <button class="btn btn-danger" id="removeContainerBtn" style="display: none;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
-                        Container entfernen
+                        Programm entfernen
                     </button>
                 </div>
 
@@ -142,7 +142,7 @@
                             <line x1="15" y1="3" x2="15" y2="21"/>
                         </svg>
                         <h3>Willkommen beim Container Configurator</h3>
-                        <p>Wähle einen Service aus der linken Sidebar, um zu beginnen.</p>
+                        <p>Wähle ein Programm aus der linken Liste, um zu beginnen.</p>
                     </div>
                 </div>
             </div>
@@ -150,7 +150,7 @@
             <!-- Preview Panel -->
             <div class="preview-panel">
                 <div class="panel-header">
-                    <h2 class="panel-title">Live-Preview</h2>
+                    <h2 class="panel-title">Vorschau & Export</h2>
                     <div class="export-buttons">
                         <button class="btn btn-primary" id="exportYaml">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -158,7 +158,7 @@
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
-                            YAML Export
+                            Als Datei speichern
                         </button>
                         <button class="btn btn-primary" id="exportScript">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -166,22 +166,22 @@
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" y1="15" x2="12" y2="3"></line>
                             </svg>
-                            Script Export
+                            Als Startskript speichern
                         </button>
                     </div>
                 </div>
 
                 <div class="preview-tabs">
-                    <button class="tab-btn active" data-tab="yaml">docker-compose.yml</button>
-                    <button class="tab-btn" data-tab="cli">docker CLI</button>
+                    <button class="tab-btn active" data-tab="yaml">Konfigurationsdatei</button>
+                    <button class="tab-btn" data-tab="cli">Terminal-Befehle</button>
                 </div>
 
                 <div class="preview-content">
                     <div class="tab-content active" id="yamlTab">
-                        <pre><code id="yamlPreview"># Wähle einen Service aus, um die Preview zu sehen</code></pre>
+                        <pre><code id="yamlPreview"># Wähle ein Programm aus, um die Vorschau zu sehen</code></pre>
                     </div>
                     <div class="tab-content" id="cliTab">
-                        <pre><code id="cliPreview"># Wähle einen Service aus, um die Preview zu sehen</code></pre>
+                        <pre><code id="cliPreview"># Wähle ein Programm aus, um die Vorschau zu sehen</code></pre>
                     </div>
                 </div>
             </div>

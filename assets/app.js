@@ -249,7 +249,7 @@ function updateActiveContainersList() {
     const container = document.getElementById('activeContainers');
 
     if (state.containers.length === 0) {
-        container.innerHTML = '<p class="empty-state">Keine Container ausgewählt</p>';
+        container.innerHTML = '<p class="empty-state">Keine Programme ausgewählt</p>';
         return;
     }
 
@@ -286,7 +286,7 @@ function renderConfigPanel() {
                     <line x1="15" y1="3" x2="15" y2="21"/>
                 </svg>
                 <h3>Willkommen beim Container Configurator</h3>
-                <p>Wähle einen Service aus der linken Sidebar, um zu beginnen.</p>
+                <p>Wähle ein Programm aus der linken Liste, um zu beginnen.</p>
             </div>
         `;
         removeBtn.style.display = 'none';
@@ -297,48 +297,49 @@ function renderConfigPanel() {
 
     configContent.innerHTML = `
         <div class="form-section">
-            <h3 class="form-section-title">Basis-Konfiguration</h3>
+            <h3 class="form-section-title">Grundeinstellungen</h3>
 
             <div class="input-grid">
                 <div class="form-group">
-                    <label class="form-label">Container-Name</label>
+                    <label class="form-label">Name des Programms</label>
                     <input type="text" class="form-input" id="containerName" value="${container.name}">
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Image</label>
+                    <label class="form-label">Programmvorlage (Image)</label>
                     <input type="text" class="form-input" id="containerImage" value="${container.image}">
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Restart Policy</label>
+                    <label class="form-label">Neustart-Verhalten</label>
                     <select class="form-select" id="restartPolicy">
-                        <option value="no" ${container.restart === 'no' ? 'selected' : ''}>no</option>
-                        <option value="always" ${container.restart === 'always' ? 'selected' : ''}>always</option>
-                        <option value="unless-stopped" ${container.restart === 'unless-stopped' ? 'selected' : ''}>unless-stopped</option>
-                        <option value="on-failure" ${container.restart === 'on-failure' ? 'selected' : ''}>on-failure</option>
+                        <option value="no" ${container.restart === 'no' ? 'selected' : ''}>Kein Neustart</option>
+                        <option value="always" ${container.restart === 'always' ? 'selected' : ''}>Immer neu starten</option>
+                        <option value="unless-stopped" ${container.restart === 'unless-stopped' ? 'selected' : ''}>Neu starten (außer manuell gestoppt)</option>
+                        <option value="on-failure" ${container.restart === 'on-failure' ? 'selected' : ''}>Nur bei Fehler neu starten</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Network Mode</label>
+                    <label class="form-label">Netzwerk-Modus</label>
                     <select class="form-select" id="networkMode">
-                        <option value="">default</option>
-                        <option value="bridge" ${container.networkMode === 'bridge' ? 'selected' : ''}>bridge</option>
-                        <option value="host" ${container.networkMode === 'host' ? 'selected' : ''}>host</option>
-                        <option value="none" ${container.networkMode === 'none' ? 'selected' : ''}>none</option>
+                        <option value="">Standard</option>
+                        <option value="bridge" ${container.networkMode === 'bridge' ? 'selected' : ''}>Bridge (Standard)</option>
+                        <option value="host" ${container.networkMode === 'host' ? 'selected' : ''}>Host (direkter Zugriff)</option>
+                        <option value="none" ${container.networkMode === 'none' ? 'selected' : ''}>Kein Netzwerk</option>
                     </select>
                 </div>
             </div>
 
             <div class="checkbox-group mt-2">
                 <input type="checkbox" id="privileged" ${container.privileged ? 'checked' : ''}>
-                <label for="privileged">Privileged Mode</label>
+                <label for="privileged">Erweiterte Rechte (nur wenn nötig)</label>
             </div>
         </div>
 
         <div class="form-section">
-            <h3 class="form-section-title">Ports</h3>
+            <h3 class="form-section-title">Netzwerk-Ports (Zugänge zum Programm)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Format: Außen:Innen (z.B. 8080:80 bedeutet Port 80 im Container ist über Port 8080 erreichbar)</p>
             <div class="dynamic-list" id="portsList"></div>
             <button class="btn btn-add" id="addPort">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -350,56 +351,61 @@ function renderConfigPanel() {
         </div>
 
         <div class="form-section">
-            <h3 class="form-section-title">Volumes</h3>
+            <h3 class="form-section-title">Datenordner (wo die Daten gespeichert werden)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Format: Pfad/auf/dem/Server:/pfad/im/container</p>
             <div class="dynamic-list" id="volumesList"></div>
             <button class="btn btn-add" id="addVolume">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Volume hinzufügen
+                Datenordner hinzufügen
             </button>
         </div>
 
         <div class="form-section">
-            <h3 class="form-section-title">Environment Variablen</h3>
+            <h3 class="form-section-title">Umgebungsvariablen (Einstellungen für das Programm)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Hier können Sie Einstellungen wie Zeitzone, Benutzer-ID, Passwörter etc. festlegen</p>
             <div class="dynamic-list" id="envList"></div>
             <button class="btn btn-add" id="addEnv">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Variable hinzufügen
+                Einstellung hinzufügen
             </button>
         </div>
 
         <div class="form-section">
-            <h3 class="form-section-title">Devices</h3>
+            <h3 class="form-section-title">Geräte (Hardware-Zugriff)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Z.B. /dev/dri für GPU-Zugriff (nur für fortgeschrittene Nutzer)</p>
             <div class="dynamic-list" id="devicesList"></div>
             <button class="btn btn-add" id="addDevice">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Device hinzufügen
+                Gerät hinzufügen
             </button>
         </div>
 
         <div class="form-section">
-            <h3 class="form-section-title">Capabilities</h3>
+            <h3 class="form-section-title">Berechtigungen (System-Capabilities)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Spezielle Berechtigungen wie NET_ADMIN für Netzwerk-Tools (nur wenn nötig)</p>
             <div class="dynamic-list" id="capAddList"></div>
             <button class="btn btn-add" id="addCapability">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Capability hinzufügen
+                Berechtigung hinzufügen
             </button>
         </div>
 
         ${container.command ? `
         <div class="form-section">
-            <h3 class="form-section-title">Command</h3>
+            <h3 class="form-section-title">Startbefehl (Command)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Spezieller Befehl, der beim Start ausgeführt wird</p>
             <div class="form-group">
                 <input type="text" class="form-input" id="containerCommand" value="${container.command}">
             </div>
@@ -407,31 +413,32 @@ function renderConfigPanel() {
         ` : ''}
 
         <div class="form-section">
-            <h3 class="form-section-title">Health Check</h3>
+            <h3 class="form-section-title">Zustandsprüfung (Health Check)</h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 0.5rem;">Automatische Überprüfung, ob das Programm noch funktioniert</p>
             <div class="checkbox-group mb-2">
                 <input type="checkbox" id="healthcheckEnabled" ${container.healthcheck.enabled ? 'checked' : ''}>
-                <label for="healthcheckEnabled">Health Check aktivieren</label>
+                <label for="healthcheckEnabled">Zustandsprüfung aktivieren</label>
             </div>
             <div id="healthcheckConfig" style="display: ${container.healthcheck.enabled ? 'block' : 'none'}">
                 <div class="form-group">
-                    <label class="form-label">Test Command</label>
+                    <label class="form-label">Prüfbefehl</label>
                     <input type="text" class="form-input" id="healthcheckTest"
                            value="${container.healthcheck.test}"
                            placeholder="CMD-SHELL curl -f http://localhost/ || exit 1">
                 </div>
                 <div class="input-grid">
                     <div class="form-group">
-                        <label class="form-label">Interval</label>
+                        <label class="form-label">Prüfintervall (z.B. 30s)</label>
                         <input type="text" class="form-input" id="healthcheckInterval"
                                value="${container.healthcheck.interval}">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Timeout</label>
+                        <label class="form-label">Timeout (z.B. 10s)</label>
                         <input type="text" class="form-input" id="healthcheckTimeout"
                                value="${container.healthcheck.timeout}">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Retries</label>
+                        <label class="form-label">Wiederholungen</label>
                         <input type="number" class="form-input" id="healthcheckRetries"
                                value="${container.healthcheck.retries}">
                     </div>
@@ -690,7 +697,7 @@ function attachEnvListListeners() {
 // ===== Preview Generation =====
 function generateYAML() {
     if (state.containers.length === 0) {
-        return '# Wähle einen Service aus, um die Preview zu sehen';
+        return '# Wähle ein Programm aus, um die Vorschau zu sehen';
     }
 
     let yaml = 'version: "3.8"\n\nservices:\n';
@@ -770,7 +777,7 @@ function generateYAML() {
 
 function generateCLI() {
     if (state.containers.length === 0) {
-        return '# Wähle einen Service aus, um die Preview zu sehen';
+        return '# Wähle ein Programm aus, um die Vorschau zu sehen';
     }
 
     let cli = '#!/bin/bash\n\n';
@@ -884,7 +891,7 @@ function handleServiceSelect(serviceType) {
 function handleClearAll() {
     if (state.containers.length === 0) return;
 
-    if (confirm('Möchtest du wirklich alle Container zurücksetzen?')) {
+    if (confirm('Möchtest du wirklich alle Programme zurücksetzen?')) {
         state.clear();
         updateActiveContainersList();
         renderConfigPanel();
@@ -896,7 +903,7 @@ function handleRemoveContainer() {
     const container = state.getCurrentContainer();
     if (!container) return;
 
-    if (confirm(`Möchtest du den Container "${container.name}" wirklich entfernen?`)) {
+    if (confirm(`Möchtest du das Programm "${container.name}" wirklich entfernen?`)) {
         state.removeContainer(container.id);
         updateActiveContainersList();
         renderConfigPanel();

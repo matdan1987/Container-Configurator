@@ -281,6 +281,11 @@ body {
     overflow: hidden;
 }
 
+.config-panel {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
 .panel-header {
     padding: var(--spacing-lg);
     border-bottom: 1px solid var(--border-color);
@@ -464,13 +469,10 @@ body {
 
 .preview-content {
     position: relative;
-    min-height: 400px;
-    max-height: 600px;
 }
 
 .tab-content {
     display: none;
-    height: 100%;
 }
 
 .tab-content.active {
@@ -480,7 +482,8 @@ body {
 .tab-content pre {
     margin: 0;
     padding: var(--spacing-lg);
-    height: 100%;
+    min-height: 400px;
+    max-height: 500px;
     overflow: auto;
     background-color: var(--bg-primary);
 }
